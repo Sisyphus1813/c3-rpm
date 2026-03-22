@@ -11,6 +11,3 @@ sudo dnf copr enable sisyphus1813/c3
 sudo dnf install -y c3
 ```
 This installs the C3 compiler and standard library.
-
-## Compatibility
-C3 currently only builds on F43. F44 is broken due to toolchain issues (LLVM/Clang + RPM flags). Looking into this further but we are most likely waiting on upstream Fedora fixes.
