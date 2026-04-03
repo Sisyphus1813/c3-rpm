@@ -1,23 +1,17 @@
 Name:           c3
-Version:        0.7.10
-Release:        3%{?dist}
+Version:        0.7.11
+Release:        1%{?dist}
 Summary:        C3 programming langauge compiler and standard library
 
 License:        MIT AND LGPL-3.0-or-later
 URL:            https://c3-lang.org/
 
 Source0:        https://github.com/c3lang/c3c/archive/refs/tags/v%{version}.tar.gz
-Patch0:         c3c-linkdir.patch
 
 ExclusiveArch:  x86_64 aarch64
 
-%if 0%{?fedora} >= 44
-BuildRequires:  clang21
-BuildRequires:  llvm21-devel
-%else
 BuildRequires:  clang
 BuildRequires:  llvm-devel
-%endif
 BuildRequires:  cmake
 BuildRequires:  lld-devel
 BuildRequires:  ncurses-devel
@@ -34,18 +28,10 @@ This is an unofficial COPR packaging of C3 and is maintained independently.
 Upstream project: https://github.com/c3lang/c3c
 
 %prep
-%if 0%{?fedora} >= 44
-%autosetup -n c3c-%{version} -p1
-%else
 %autosetup -n c3c-%{version}
-%endif
 
 %build
-%if 0%{?fedora} >= 44
-cmake -B build -S . -DC3_LINK_DYNAMIC=1 -DLLVM_DIR=/usr/lib64/llvm21/lib64/cmake/llvm
-%else
 cmake -B build -S . -DC3_LINK_DYNAMIC=1
-%endif
 cmake --build build
 
 %check
@@ -64,5 +50,7 @@ cp -r build/lib/* %{buildroot}%{_prefix}/lib/c3
 %{_prefix}/lib/c3
 
 %changelog
-* Sun Mar 22 2026 Fedora COPR <sisyphus1813@protonmail.com> 0.7.10-3
-- Patch only applies to F44 now.
+* Fri Apr 3 2026 Fedora COPR <sisyphus1813@protonmail.com> 0.7.11-1
+- Updated to Version 0.7.11
+- Patch removed as it is no longer needed
+- Build instructions simplified as LLVM22 now supported upstream
